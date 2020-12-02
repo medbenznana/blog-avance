@@ -1,0 +1,13 @@
+
+<div>
+        {% verbatim %}
+        <div class="row" v-for="feed in feeds">
+                <div class="col-md-6">
+                        <a v-bind:href="feed.url">{{ feed.url }}</a>
+                </div>
+                <div class="col-md-6 text-right">
+                        <a @click="deleteFeed(feed.id)" class="text-danger">Delete</a>
+                </div>
+        </div>
+        {% endverbatim %}
+</div>

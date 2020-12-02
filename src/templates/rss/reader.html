@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block head_title %}
+    Django RSS Reader | {{ block.super }}
+{% endblock head_title %}
+
+
+{% block content %}
+
+<br>
+<div class="container">
+    <div class="row">
+    	<div class="col-lg-12 col-md-12">
+    		<div class="sidebarblock">
+                <div id="rss-app" class="container">
+							        <ul class="nav mb-4">
+							                <li class="nav-item">
+							                        <a class="nav-link" href="#feeds" @click="setRoute('feeds')">Feeds</a>
+							                </li>
+							                <li class="nav-item">
+							                        <a class="nav-link" href="#controls" @click="setRoute('controls')">Controls</a>
+							                </li>
+							        </ul>
+
+							        <div class="row">
+							                <div class="col-md-4">
+							                        <input type="text" v-model="newLink" placeholder="RSS feed URL" class="form-control">
+							                </div>
+							                <div class="col-md-2">
+							                        <button class="btn btn-secondary" @click="newFeed">Save</button>
+							                </div>
+							        </div>
+
+							        <div v-if="route == 'controls'">
+							                {% include 'rss/control.html' %}
+							        </div>
+							        <div v-if="route == 'feeds'">
+							                {% include 'rss/feeds.html' %}
+							        </div>
+							</div>
+            </div>
+    	</div>
+    </div>
+</div>
+	
+	                        
+
+{% endblock %}

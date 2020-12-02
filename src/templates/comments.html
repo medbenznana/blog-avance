@@ -1,0 +1,128 @@
+{% load crispy_forms_tags %}
+
+<h1>{{ comments.count }} Answer{% if comments.count > 1 %}s{% endif %}</h1>
+<ul id="comments-list" class="comments-list">
+    <!-- POST -->
+    {% for comment in comments %}
+        <li>
+            <div class="comment-main-level">
+                <!-- Avatar -->
+                <div class="comment-avatar"><img src="{{ comment.user.profile.image.url }}" alt=""></div>
+                <!-- Contenedor del Comentario -->
+                <div class="comment-box">
+                    <div class="comment-head">
+                        {% if comment.user.is_superuser %}
+                            <h6 class="comment-name by-author">
+                                {% if comment.user.get_full_name %}
+                                    -- {{ comment.user.get_full_name }} --
+                                {% else %}
+                                    -- {{ comment.user }} --
+                                {% endif %}
+                            </h6>
+                        {% else %}
+                            <h6 class="comment-name">
+                                {% if comment.user.get_full_name %}
+                                    -- {{ comment.user.get_full_name }} --
+                                {% else %}
+                                    -- {{ comment.user }} --
+                                {% endif %}
+                            </h6>
+                        {% endif %}
+                        <span>{{ comment.timestamp|timesince }} ago {% if comment.children.count > 0 %}| {{ comment.children.count }} Comment{% if comment.children.count > 1 %}s{% endif %} {% endif %}</span>
+                        <a class='comment-reply-btn' href='#0' title="Reply"><i class="fa fa-reply"></i></a>
+                        <a class='' href='{{ comment.get_absolute_url }}' title="Thread"><i class="fa fa-comments" aria-hidden="true"></i></a>
+                    </div>
+                    <div class="comment-content">
+                        {{ comment.content }}
+                    </div>
+                </div>
+            </div>
+            <ul class="comment-reply comments-list reply-list">
+                {% for child_comment in comment.children %}
+                    <li>
+                        <!-- Avatar -->
+                        <div class="comment-avatar"><img src="{{ child_comment.user.profile.image.url }}" alt=""></div>
+                        <!-- Contenedor del Comentario -->
+                        <div class="comment-box">
+                            <div class="comment-head">
+                                <h6 class="comment-name">
+                                    {% if child_comment.user.get_full_name %}
+                                        -- {{ child_comment.user.get_full_name }} --
+                                    {% else %}
+                                        -- {{ child_comment.user }} --
+                                    {% endif %}
+                                </h6>
+                                <span>{{ child_comment.timestamp|timesince }} ago</span>
+                            </div>
+                            <div class="comment-content">
+                                {{ child_comment.content }}
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
+                <li class="li_reply">
+                    {% if request.user.is_authenticated %}
+                        <div class="comment-avatar" style="border: 0;box-shadow: none;">
+                            <div class="userinfo">
+                                <div class="avatar">
+                                    <img src="{{ user.profile.image.url }}" alt="" />
+                                    <div class="status green">&nbsp;</div>
+                                </div>
+                                <div class="imgsize">{{ user.username }}</div>
+                            </div>
+                        </div>
+                        <div class="comment-box">
+                            <form method="POST" action="." class="comment-form"> {% csrf_token %}
+                                <div class="posttext">
+                                    <div class="textwraper" style="background: #fff;">
+                                        {{ comment_form|crispy }}
+                                        <input type='hidden' name='parent_id' value='{{ comment.id }}'>
+                                        <div class="pull-right"><input type='submit' value='Reply' class='btn btn-primary'></div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    {% else %}
+                        <div class="comment-box log-required" style="-webkit-box-shadow: none;">
+                            <input type='hidden' name='id_content' id="id_content" value=''>
+                            <blockquote class="login-required"><p><strong>You must be logged in to comment. Sign in <a href='{% url "login" %}' title="Sign in">here</a></strong></p></blockquote>
+                        </div>
+                    {% endif %}
+                </li>
+            </ul>
+        </li>
+    {% endfor %}
+</ul>
+
+{% if request.user.is_authenticated %}
+    <h3>Your Answer</h3>
+    <div class="post">
+        <form method="POST" action="." class="reply-form"> {% csrf_token %}
+            <div class="topwrap">
+                <div class="userinfo pull-left">
+                    <div class="avatar">
+                        <img src="{{ user.profile.image.url }}" alt="" />
+                        <div class="status green">&nbsp;</div>
+                    </div>
+                </div>
+                <div class="posttext pull-left">
+                    <div class="textwraper">
+                        <!--<div class="postreply">Post a Reply</div>-->
+                        {{ comment_form|crispy }}
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>                              
+            <div class="postinfobot">
+                <div class="pull-right postreply">
+                    <div class="pull-left"><button type="submit" class="btn btn-primary">Post Reply</button></div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </form>
+    </div>
+{% else %}
+    <blockquote class="login-required"><p><strong>You must be logged in to comment. Sign in <a href='{% url "login" %}' title="Sign in">here</a></strong></p></blockquote>
+{% endif %}

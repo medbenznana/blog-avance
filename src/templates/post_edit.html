@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block head_title %}
+{{ title }} | Edit | {{ block.super }}
+{% endblock head_title %}
+
+
+{% block head_extra %} 
+{{ form.media }}
+
+{% endblock head_extra %}
+
+
+
+{% block content %}
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-md-8">
+        	<div class="post">
+        		<form method='POST' action='' class="form newtopic" enctype='multipart/form-data'>{% csrf_token %}
+                    <div class="postinfotop">
+                        <h2>{{ submit }}</h2>
+                    </div>
+                    <div class="accsection">
+                        <div class="topwrap">
+                            <div class="posttext pull-left" style="padding-left: 30px;width: 100%;">
+                            	<div class="row">
+                                    <div class="col-lg-12 col-md-12">
+                                		{{ form|crispy }}
+                                        {{ formset.management_form }}
+                                        {% for f in formset %}
+                                            {{ f|crispy }}
+                                        {% endfor %}
+                                	</div>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>  
+                    </div>
+                    <div class="postinfobot">
+                        <div class="pull-right postreply">
+                            <div class="pull-left"><button type="submit" class="btn btn-primary">{{ submit }}</button></div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </form>
+            </div>
+      	</div>
+        <div class="col-lg-4 col-md-4">
+            <div class="sidebarblock">
+                <h3>Preview</h3>
+                <div class="divline"></div>
+                <div class="blocktxt">
+                    <h2 id='preview-title' style="margin-top: 0;font-size: 18px;font-weight: bold;"></h2>
+                    <p id='preview-content' style="color: #929090;font-size: 12px;"></p>
+                </div>
+            </div>
+        </div>
+	</div>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block head_title %}
+    Unsubscribe Newsletter | {{ block.super }}
+{% endblock head_title %}
+
+{% block content %}
+
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <div class="post">
+                <div class="topwrap">
+                    <div class="subscribe-section bg-with-black">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="subscribe-head">
+                                        <h1>Newsletter</h1>
+                                        <h2>You will be missed</h2>
+                                        <p>We hate goodbyes-but if you have a change of heart, we'll always be here with great deals to share. Click bellow to unsubscribe...</p>
+                                        <a href="#modal-id-2" class="btn"><i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp;Unsubscribe</a>
+                                        <small><em></em></small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="light-modal" id="modal-id-2" role="dialog" aria-labelledby="light-modal-label" aria-hidden="false">
+    <div class="light-modal-content  animated zoomInUp">
+        <!-- light modal header -->
+        <div class="light-modal-header">
+            <h3 class="light-modal-heading"><i class="fa fa-envelope"></i> Unsubscribe from our weekly Newsletter</h3>
+            <a href="#0" class="light-modal-close-icon" aria-label="close">&times;</a>
+        </div>
+        <!-- light modal body -->
+        <div class="light-modal-body">
+            <p>Unsubscribe from our weekly Newsletter.</p>
+            <form action="." method="post">{% csrf_token %}
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                    {{ form }}
+                </div><br />
+                <button type="submit" value="sub" name="sub" class="btn btn-primary"><i class="fa fa-share"></i> Unsubscribe</button>
+            </form>
+        </div>
+        <!-- light modal footer -->
+        <div class="light-modal-footer">
+            <a href="#0" class="light-modal-close-btn" aria-label="close">Close</a>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

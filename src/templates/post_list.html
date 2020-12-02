@@ -1,0 +1,177 @@
+{% extends "base.html" %}
+{% block content %}
+    <br>
+    <div class="container">
+        <div class="row" id="statistics">
+            <div class="col-lg-4 col-sm-4">
+                <div class="circle-tile ">
+                    <div class="circle-tile-heading red"><i class="fa fa-list-alt fa-fw fa-3x"></i></div>
+                    <div class="circle-tile-content red">
+                        <div class="circle-tile-description text-faded"> Posts</div>
+                        <div class="circle-tile-number text-faded ">{{ nbr_blogs }}</div>
+                        <!--<a class="circle-tile-footer" href="#">More Info <i class="fa fa-chevron-circle-right"></i></a>-->
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-4">
+                <div class="circle-tile ">
+                    <div class="circle-tile-heading green"><i class="fa fa-commenting-o fa-fw fa-3x"></i></div>
+                    <div class="circle-tile-content green">
+                        <div class="circle-tile-description text-faded"> Comments</div>
+                        <div class="circle-tile-number text-faded ">{{ nbr_comments }}</div>
+                        <!--<a class="circle-tile-footer" href="#">More Info <i class="fa fa-chevron-circle-right"></i></a>-->
+                    </div>
+                </div>
+            </div>  
+            <div class="col-lg-4 col-sm-4">
+                <div class="circle-tile ">
+                    <div class="circle-tile-heading dark-blue"><i class="fa fa-users fa-fw fa-3x"></i></div>
+                    <div class="circle-tile-content dark-blue">
+                        <div class="circle-tile-description text-faded"> Members</div>
+                        <div class="circle-tile-number text-faded ">{{ nbr_users }}</div>
+                        <!--<a class="circle-tile-footer" href="#">More Info <i class="fa fa-chevron-circle-right"></i></a>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-lg-8 col-md-8">
+                {% for obj in object_list %}
+                    <div class="post">
+                        <div class="wrap-ut pull-left">
+                            <div class="userinfo pull-left">
+                                <div class="avatar">
+                                    {% if obj.user.get_full_name %}
+                                        <img src="{{ obj.user.profile.image.url }}" alt="{{ obj.user.get_full_name }}" title="{{ obj.user.get_full_name }}" />
+                                    {% else %} 
+                                        <img src="{{ obj.user.profile.image.url }}" alt="{{ obj.user.username }}" title="{{ obj.user.username }}" />
+                                    {% endif %}
+                                    
+                                    {% if obj.user == request.user %}
+                                        <div class="status green">&nbsp;</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="posttext pull-left">
+                                <h2><a href="{{ obj.get_absolute_url }}">{{ obj.title }}</a></h2>
+                                <small style="font-size: 11px">{% if obj.draft %} - Staff only: <span style='color:red;'>Draft</span> | {% endif %}</small>
+                                <small style="font-size: 11px">{% if obj.publish > today %} - Staff only: <span style='color:red;'>Future Post</span> | {% endif %}</small>
+                                <small style="font-size: 11px"><em>Created by : <b>
+                                    {% if obj.user.get_full_name %}
+                                        -- {{ obj.user.get_full_name }} --
+                                    {% else %}
+                                        -- {{ obj.user.username }} --
+                                    {% endif %}
+                                    </b></em>
+                                </small>
+                                <p>{{ obj.get_markdown|truncatechars_html:120 }}</p>
+                                <a href="{{ obj.get_absolute_url }}" class="btn btn-info">Read more</a>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="postinfo pull-left">
+                            <div class="comments">
+                                <div class="commentbg">
+                                    {{ obj.comments.count }} <i class="fa fa-comments" aria-hidden="true"></i>
+                                    <div class="mark"></div>
+                                </div>
+
+                            </div>
+
+                            <div class="views"><i class="fa fa-thumbs-up" aria-hidden="true"></i>&nbsp;{{ obj.likes.count }}</div>
+                            <div class="views"><i class="fa fa-thumbs-down" aria-hidden="true"></i>&nbsp;{{ obj.nolikes.count }}</div>
+                            <div class="time"><i class="fa fa-calendar"></i> {{ obj.publish }}</div>                                    
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    {% empty %}
+                        <div id="notfound">
+                            <div class="notfound">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div class="notfound-404">
+                                            <h1>:(</h1>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <h2>No Result Found</h2>
+                                        <p>No Posts Found having search query <strong style="color: #f00;"><em>"{{ request.GET.q }}"</em></strong></p>
+                                        <a href="{% url 'posts:list' %}">home page</a>
+                                    </div>
+                                </div>                                
+                            </div>
+                        </div>
+                {% endfor %}
+
+                {% if object_list.has_other_pages %}
+                    {% if object_list.has_previous %}
+                        <div class="pull-left"><a href="?{{ page_request_var }}={{ object_list.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}" class="prevnext"><i class="fa fa-angle-left"></i></a></div>
+                    {% endif %}
+                    <div class="pull-left">
+                        <ul class="paginationforum">
+                            {% if object_list.has_previous %}
+                                <li><a href="?{{ page_request_var }}=1">First</a></li>
+                            {% endif %}
+                            {% for num in object_list.paginator.page_range %}
+                                {% if object_list.number == num %}
+                                    <li><a href="?{{ page_request_var }}={{ num }}" class="active">{{ num }}</a></li>
+                                {% elif num > object_list.number|add:'-3' and num < object_list.number|add:'3' %}
+                                    <li><a href="?{{ page_request_var }}={{ num }}">{{ num }}</a></li>
+                                {% endif %}
+                            {% endfor %}
+                            {% if object_list.has_next %}
+                                <li><a href="?{{ page_request_var }}={{ object_list.paginator.num_pages }}">Last</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                    {% if object_list.has_next %}
+                        <div class="pull-left"><a href="?{{ page_request_var }}={{ object_list.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}" class="prevnext last"><i class="fa fa-angle-right"></i></a></div>
+                        <div class="clearfix"></div>
+                    {% endif %}
+                {% endif %}
+
+            </div>
+            <div class="col-lg-4 col-md-4">
+                <div class="sidebarblock">
+                    {% if feed %}
+                        <a href="{{ url }}" target="_blank">
+                            <h3 style="background: #fa9c3a;color: #ffffff;font-size: 20px;"><i class="fa fa-rss" aria-hidden="true"></i>&nbsp;&nbsp;{{ feed.feed.title }}</h3>
+                        </a>
+                        <div class="divline"></div>
+                        <div class="blocktxt">
+                            {% if feed.items %}
+                                <ul class="cats">
+                                    {% for item in feed.items %}
+                                        <li>
+                                            <div class="row">
+                                               <div class="col-md-12">
+
+                                                   <a href="{{ item.link }}" target="_blank"><i class="fa fa-share" aria-hidden="true"></i>
+                                                    &nbsp;<u>{{ item.title }}</u></a><br>
+                                                   <small><em>{{ item.published }}</em></small>
+                                               </div> 
+                                            </div>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </div>
+                    {% else %}
+                        <div class="blocktxt">
+                            <p>No favorite RSS feed found.</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        setInterval("my_function();",5000); 
+        function my_function(){
+          $('#statistics').fadeOut("slow").load(location.href + ' #statistics').fadeIn("slow");
+        }
+    </script>
+
+{% endblock content %}

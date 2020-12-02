@@ -1,0 +1,38 @@
+<h3>Favourite Posts
+  {% if favourite_post.count != 0 %}
+      <span><b>({{ favourite_posts.count }})</b></span>
+  {% else %}
+      <span><b>(0)</b></span>
+  {% endif %}
+  <a href="{% url 'posts:post_favourite_list' %}" title="My favorite posts" class="pull-right" style="color: #ff00a5;font-size: 20px;"><i class="fa fa-heart"></i></a>
+</h3>
+<div class="divline"></div>
+<div class="blocktxt">
+    {% if favourite_posts != None %}
+      <ul class="cats">
+          {% for obj in favourite_posts %}
+              <li>
+                  <div class="row">
+                    <div class="col-md-2">
+                        <img class="img-responsive" src="{{ obj.user.profile.image.url }}" alt="" />
+                    </div>
+                    <div class="col-md-10">
+                      <a href="{{ obj.get_absolute_url }}" title="Remove">
+                          {{ obj.title }}
+                      </a>
+                      <!--<span class="badge pull-right" style="background: transparent;color: #000;">
+                        <a href="{{ obj.get_absolute_url }}" title="Remove" class="ask">
+                          <i class="fa fa-times" aria-hidden="true"></i>
+                        </a>
+                        </span>-->
+                      <br>
+                      <small><em>-- {{ obj.publish }} --</em></small>
+                    </div>   
+                  </div>
+              </li>
+          {% endfor %}
+      </ul>
+    {% else %}
+        <span class="empty">No items in favorite.</span>
+    {% endif %}
+</div>

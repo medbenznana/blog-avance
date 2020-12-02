@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load urlify %}
+{% load crispy_forms_tags %}
+
+
+{% block head_title %}
+{{ title }} | {{ block.super }}
+{% endblock head_title %}
+
+{% block content %}
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 breadcrumbf">
+        	<a href="{% url 'posts:list' %}">Home</a> <span class="diviver">&gt;</span>
+            {% block post_detail_link %}
+                 <a href="{{ instance.get_absolute_url }}">{{ title }}</a>
+            {% endblock %}
+        </div>
+    </div>
+</div>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-md-8">
+            <div class="post">
+                <div class="topwrap">
+                    <div class="posttext" style="padding: 30px;width: 100%">
+                        <h3>Who we are ?</h3>
+                        <p><img src="{% static 'images/car.jpg' %}" class="img-responsive" alt="" /></p>
+                        <p>Today, we're looking at three particularly interesting stories. Pinterest added a new location-based feature on Wednesday that uses Place Pins as a way to map out vacations and favorite areas. Southwest Airlines is providing Wi-Fi access from gate to gate for $8 per day through an onboard hotspot. And in an effort to ramp up its user base, Google Wallet is offering a debit card that can take out cash from.</p>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>   
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block head_title %}
+{{ title }} | {{ block.super }}
+{% endblock head_title %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2 breadcrumbf">
+            <a href="{% url 'posts:list' %}">Home</a> <span class="diviver">&gt;</span>
+            <a href="">{{ title }}</a>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+        	<div class="post">
+        		<form method='POST' action='' class="form newtopic" enctype='multipart/form-data'>{% csrf_token %}
+                    <div class="postinfotop">
+                        <h2>{{ title }}</h2>
+                    </div>
+                    <div class="accsection">
+                        <div class="topwrap">
+                            <div class="posttext pull-left" style="padding-left: 30px;width: 100%;">
+                                <div class="omb_login">
+                                    <div class="row omb_row-sm-offset-3 omb_socialButtons">
+                                        <div class="col-xs-4 col-sm-3">
+                                            <a href="{% url 'social:begin' 'facebook' %}" title="Login with Facebook">
+                                                <button type="button" name="button" class="loginBtn loginBtn--facebook">Facebook</button>
+                                            </a>
+                                        </div>
+                                        <div class="col-xs-4 col-sm-3">
+                                            <a href="{% url 'social:begin' 'instagram' %}" title="Login with Instagram">
+                                                <button type="button" name="button" class="loginBtn loginBtn--instagram">Instagram</button>
+                                            </a>
+                                        </div>  
+                                        <div class="col-xs-4 col-sm-3">
+                                            <a href="{% url 'social:begin' 'github' %}" title="Login with Github">
+                                                <button type="button" name="button" class="loginBtn loginBtn--github">Github</button>
+                                            </a>
+                                        </div>  
+                                        <div class="col-xs-4 col-sm-3">
+                                            <a href="{% url 'social:begin' 'google-oauth2' %}" title="Login with Google">
+                                                <button type="button" name="button" class="loginBtn loginBtn--google">Google</button>
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <div class="row omb_row-sm-offset-3 omb_loginOr">
+                                        <div class="col-xs-12 col-sm-12">
+                                            <hr class="omb_hrOr">
+                                            <span class="omb_spanOr">OR</span>
+                                        </div>
+                                    </div>
+                                    <div class="row omb_row-sm-offset-3">
+                                        <div class="col-xs-12 col-sm-12">    
+                                            {{ form|crispy }}
+                                        </div>
+                                    </div>
+                                    {% if title == "Login" %}
+                                        <div class="row omb_row-sm-offset-3">
+                                            <div class="col-xs-12 col-sm-6">
+                                                <div class="pull-left">
+                                                    <small class="text-muted">
+                                                        Don't have an account?
+                                                        <a href="{% url 'register' %}">Sign up</a>
+                                                    </small>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-6">
+                                                <p class="omb_forgotPwd">
+                                                    <a href="{% url 'reset_password' %}">Forgot password?</a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    {% else %}
+                                        <div class="row omb_row-sm-offset-3">
+                                            <div class="col-xs-12 col-sm-12">
+                                                <div class="pull-left">
+                                                    <small class="text-muted">
+                                                        Already have an account?
+                                                        <a href="{% url 'login' %}">sign in here</a>
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        </div>    
+                                    {% endif %}      
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>  
+                    </div>
+                    <div class="postinfobot" style="padding: 0 20px 0 20px;">
+                        <div class="pull-right postreply">
+                            <div class="pull-left"><button type="submit" class="btn btn-primary">{{ title }}</button></div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </form>
+            </div>
+      	</div>
+	</div>
+</div>
+{% endblock content %}

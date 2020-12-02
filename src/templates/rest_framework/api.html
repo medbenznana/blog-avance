@@ -1,0 +1,17 @@
+{% extends "rest_framework/base.html" %}
+{% load staticfiles %}
+
+{% block title %} BENZNANA Bloger's {% endblock %}
+
+{% block branding %}
+	<span>       
+		  <a class="navbar-brand" rel="nofollow" href="">
+		      BENZNANA Bloger's <span class="version">1</span>
+		  </a>
+	</span>
+{% endblock %}
+
+{% block style %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static "css/moonshine.css" %}"/>
+{% endblock %}

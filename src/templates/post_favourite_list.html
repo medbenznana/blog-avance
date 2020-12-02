@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block head_title %}
+Favorite posts | {{ block.super }}
+{% endblock head_title %}
+
+
+{% block content %}
+    <div class="container">
+        <br><div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="wrap">
+                    <form method='GET' action='{% url "posts:post_favourite_list" %}' class='form'>
+                        <div class="pull-left txt"><input type="text" name='search' class="form-control" placeholder="Search favourite" value='{{ request.GET.search }}'></div>
+                        <div class="pull-left"><button class="btn btn-default" type='submit'><i class="fa fa-search"></i></button></div>
+                        <div class="clearfix"></div>
+                    </form>
+                </div>
+            </div>
+        </div><br>
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                {% for obj in favourite_posts %}
+                    <div class="post">
+                        <div class="wrap-ut pull-left">
+                            <div class="userinfo pull-left">
+                                <div class="avatar">
+                                    <img src="{{ obj.user.profile.image.url }}" alt="" />
+                                    {% if obj.user == request.user %}
+                                        <div class="status green">&nbsp;</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="posttext pull-left">
+                                <h2><a href="{{ obj.get_absolute_url }}">{{ obj.title }}</a></h2>
+                                <p>{{ obj.get_markdown|truncatechars_html:120 }}</p>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="postinfo pull-left">
+                            <div class="comments">
+                                <div class="commentbg">
+                                    {{ obj.comments.count }} Comment
+                                    <div class="mark"></div>
+                                </div>
+
+                            </div>
+                            <div class="views">Author: {{ obj.user.username }}</div>
+                            <div class="time"><i class="fa fa-calendar"></i> {{ obj.publish }}</div>                                    
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    {% empty %}
+                        <br><br>
+                        <div id="notfound">
+                            <div class="notfound">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div class="notfound-404">
+                                            <h1>:(</h1>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <h2>No Result Found</h2>
+                                        <p>No Favourite Post Found having search query <strong style="color: #f00;"><em>"{{ request.GET.search }}"</em></strong></p>
+                                        <a href="{% url 'posts:post_favourite_list' %}">Favourite Post</a>
+                                    </div>
+                                </div>                                
+                            </div>
+                        </div>
+                {% endfor %}
+
+                {% if favourite_posts.has_other_pages %}
+                    {% if favourite_posts.has_previous %}
+                        <div class="pull-left"><a href="?{{ page_request_var }}={{ favourite_posts.previous_page_number }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}" class="prevnext"><i class="fa fa-angle-left"></i></a></div>
+                    {% endif %}
+                    <div class="pull-left">
+                        <ul class="paginationforum">
+                            {% if favourite_posts.has_previous %}
+                                <li><a href="?{{ page_request_var }}=1">First</a></li>
+                            {% endif %}
+                            {% for num in favourite_posts.paginator.page_range %}
+                                {% if favourite_posts.number == num %}
+                                    <li><a href="?{{ page_request_var }}={{ num }}" class="active">{{ num }}</a></li>
+                                {% elif num > favourite_posts.number|add:'-3' and num < favourite_posts.number|add:'3' %}
+                                    <li><a href="?{{ page_request_var }}={{ num }}">{{ num }}</a></li>
+                                {% endif %}
+                            {% endfor %}
+                            {% if favourite_posts.has_next %}
+                                <li><a href="?{{ page_request_var }}={{ favourite_posts.paginator.num_pages }}">Last</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                    {% if favourite_posts.has_next %}
+                        <div class="pull-left"><a href="?{{ page_request_var }}={{ favourite_posts.next_page_number }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}" class="prevnext last"><i class="fa fa-angle-right"></i></a></div>
+                        <div class="clearfix"></div>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+<br><br>
+{% endblock content %}

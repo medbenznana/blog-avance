@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load urlify %}
+{% load crispy_forms_tags %}
+
+
+{% block head_title %}
+Comment Thread | {{ block.super }}
+{% endblock head_title %}
+
+
+
+{% block content %}
+{{ object }}
+
+
+<div class="main-thread-section">
+    {% include "comment_thread_serialized.html" %}
+</div>
+
+{% endblock content %}
+
+
+<!--<ul class="comments-list-thread">
+        <li class="comment">
+            <a class="pull-left" href="#">
+                <img class="avatar" src="http://bootdey.com/img/Content/user_3.jpg" alt="avatar">
+            </a>
+            <div class="comment-body">
+                <div class="comment-heading">
+                    <h4 class="user">Ryan Haywood</h4>
+                    <h5 class="time_post">3 minutes ago</h5>
+                </div>
+                <p>Relax my friend</p>
+            </div>
+        </li> 
+        <li class="comment">
+            <a class="pull-left" href="#">
+                <img class="avatar" src="http://bootdey.com/img/Content/user_2.jpg" alt="avatar">
+            </a>
+            <div class="comment-body">
+                <div class="comment-heading">
+                    <h4 class="user">Gavino Free</h4>
+                    <h5 class="time_post">3 minutes ago</h5>
+                </div>
+                <p>Ok, cool.</p>
+            </div>
+        </li> 
+    </ul>-->

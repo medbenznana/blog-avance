@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load urlify %}
+{% load crispy_forms_tags %}
+
+
+{% block head_title %}
+{{ instance.title }} | {{ block.super }}
+{% endblock head_title %}
+
+
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 breadcrumbf">
+        	<a href="#">Confirm Delete</a>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-md-8">
+        	<div class="post">
+        		<form method='POST' action='.' class="form newtopic">{% csrf_token %}
+                    <div class="postinfotop">
+                        <h2>Confirm Delete</h2>
+                    </div>
+
+                    <!-- acc section -->
+                    <div class="accsection">
+                        <div class="topwrap">
+                            <h4 style="padding: 20px">A re you sure you want to delete: "{{ object.content }}"?</h4>
+                            <div class="clearfix"></div>
+                        </div>  
+                    </div>
+                    <div class="postinfobot" style="padding: 0 20px 0 20px;">
+                    	<div class="pull-left">
+                            <input type='submit' value='Yes, Delete' class='btn btn-danger'>
+                            <a href='{{ object.get_absolute_url }}' class='btn btn-default'>Cancel</a>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </form>
+            </div>
+      	</div>
+	</div>
+</div>
+
+
+{% endblock content %}

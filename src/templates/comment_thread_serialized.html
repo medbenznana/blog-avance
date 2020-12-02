@@ -1,0 +1,129 @@
+
+<div class="container">
+        <div class="row">
+            <div class="col-lg-8 breadcrumbf">
+                <a href="{% url 'posts:list' %}">Home</a> <span class="diviver">&gt;</span>
+                <a href="{{ comment.content_object.get_absolute_url }}">{{ comment.content_object.title }}</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-white post panel-shadow">
+                    <div class="post-heading">
+                        <div class="pull-left image avatar">
+                            <img src="{{ comment.user.profile.image.url }}" class="img-circle avatar" alt="user profile image" />
+                            {% if comment.user == request.user %}
+                                <div class="status green">&nbsp;</div>
+                            {% endif %}
+                        </div>
+                        <div class="pull-left meta">
+                            <div class="title h5">
+                                <a href="#0"><b>
+                                  {% if comment.user.get_full_name %}
+                                    {{ comment.user.get_full_name }}
+                                  {% else %} 
+                                    {{ comment.user.username }}
+                                  {% endif %}
+                                </b></a>
+                                made a comment.
+                            </div>
+                            <h6 class="text-muted time_post">{{ comment.timestamp|timesince }} ago </h6>
+                        </div>
+                        {% if request.user == comment.user %}
+                          <div class="pull-right">
+                            <div class="dropdown">
+                                <button class="btn btn-link dropdown-toggle" type="button" id="dropdownMenuAction" data-toggle="dropdown" title="Remove this">
+                                    <i class="fa fa-ellipsis-h"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-right dropdownMenuAction" role="menu" aria-labelledby="dropdownMenuAction">
+                                    <li role="presentation">
+                                        <a role="menuitem" tabindex="-1" id="pb-confirm-delete-comment" title="Remove comment">
+                                            <i class="fa fa-trash-o" aria-hidden="true"></i> Delete...
+                                        </a>
+                                          <script type="text/javascript">
+                                            document.getElementById('pb-confirm-delete-comment').onclick = function () {
+                                              pb.confirm(
+                                                function (outcome) {
+                                                    if(outcome){
+                                                        window.location.href = "{{ comment.get_delete_url }}";
+                                                        return true;
+                                                    }else{
+                                                        return false;
+                                                    }
+                                                },
+                                                'Are you sure you want to delete this comment ?',
+                                                'Yes',
+                                                'No'
+                                              );
+                                            }
+                                        </script>
+                                    </li>
+                                    <!--<li role="presentation" class="divider"></li>-->
+                                </ul>
+                            </div>
+                          </div>
+                        {% endif %}
+                    </div> 
+                    <div class="post-description"> 
+                        <p>{{ comment.content }}</p>
+                        <div class="stats">
+                            <a href="#0" class="btn btn-default stat-item">
+                                <i class="fa fa-share icon"></i>
+                                {% if comment.children.count > 0 %}
+                                  {{ comment.children.count }} Repl{% if comment.children.count > 1 %}ies{% else %}y{% endif %}
+                                {% endif %}
+                            </a>
+                        </div>
+                    </div>
+                    <div class="post-footer">
+                        {% if request.user.is_authenticated %}
+                          <form method="POST" action="." class="thread-form"> {% csrf_token %}
+                            <div class="input-group"> 
+                                {{ form }}
+                                <span class="input-group-addon">
+                                    <input type='hidden' name='parent_id' value='{{ comment.id }}'>
+                                    <button type="submit"><i class="fa fa-edit"></i></button>
+                                </span>
+                            </div>
+                          </form>
+                        {% endif %}
+                        <ul class="comments-list-thread">
+                          {% for child_comment in comment.children %}
+                            <li class="comment">
+                                <div class="pull-left avatar">
+                                    <img class="avatar" src="{{ child_comment.user.profile.image.url }}" alt="avatar">
+                                    {% if child_comment.user == request.user %}
+                                        <div class="status green">&nbsp;</div>
+                                    {% endif %}
+                                </div>
+                                <div class="comment-body">
+                                    <div class="comment-heading">
+                                        <h4 class="user">
+                                          {% if child_comment.user.get_full_name %}
+                                            {{ child_comment.user.get_full_name }}
+                                          {% else %} 
+                                            {{ child_comment.user.username }}
+                                          {% endif %}
+                                        </h4>
+                                        <h5 class="time_post">{{ child_comment.timestamp|timesince }} ago</h5>
+                                        {% if request.user == child_comment.user %}
+                                          <div class="pull-right">
+                                              <a class='btn btn-danger ask' title="Remove comment" href='{{ child_comment.get_delete_url }}'>
+                                                <i class="fa fa-times" aria-hidden="true"></i>
+                                              </a>
+                                          </div>
+                                        {% endif %}
+                                    </div>
+                                    <p>{{ child_comment.content }}</p>
+                                </div>
+                            </li>
+                          {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

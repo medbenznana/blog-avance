@@ -1,0 +1,312 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block head_title %}Advancing the Blog{% endblock head_title %}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <link href="{% static 'css/bootstrap-datetimepicker.min.css' %}" rel="stylesheet">
+
+    <!-- Custom -->
+    <link href="{% static 'css/custom.css' %}" rel="stylesheet">
+
+    <!-- fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="{% static 'font-awesome-4.7.0/css/font-awesome.min.css' %}">
+
+    <!-- CSS STYLE-->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" media="screen" />
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}" media="screen" />
+
+    <!-- SLIDER REVOLUTION 4.x CSS SETTINGS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'rs-plugin/css/settings.css' %}" media="screen" />
+
+    <link rel="stylesheet" href="{% static 'css/prettyPhoto.css' %}" type="text/css" media="screen" title="prettyPhoto main stylesheet" charset="utf-8" />
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/prompt-boxes.min.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/animate.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/light-modal.css' %}">
+    <link rel="icon" href="{% static 'images/favicon.ico' %}">
+
+    <script src="{% static 'js/vue.js' %}"></script>
+
+    <style>
+    {% block style %}{% endblock style %}
+    </style>
+
+    <script src="{% static 'js/prompt-boxes.min.js' %}"></script>
+    <script type="text/javascript">
+        var pb = new PromptBoxes({
+            attrPrefix: 'pb',
+                speeds: {
+                backdrop: 250, // The enter/leaving animation speed of the backdrop
+                toasts: 250 // The enter/leaving animation speed of the toast
+            },
+            confirm: {
+                confirmText: 'Confirm', // The text for the confirm button
+                confirmClass: '', // A class for the confirm button
+                cancelText: 'Cancel', // The text for the cancel button
+                cancelClass: '', // A class for the cancel button
+                closeWithEscape: true, // Allow closing with escaping
+                absolute: false // Show prompt popup as absolute
+            }
+        });
+    </script>
+    {% block head_extra %} {% endblock head_extra %}
+</head>
+<body>
+
+    <div class="loader">
+      <div id="cssload-wrapper">
+        <div class="cssload-loader">
+          <div class="cssload-line"></div>
+          <div class="cssload-line"></div>
+          <div class="cssload-line"></div>
+          <div class="cssload-line"></div>
+          <div class="cssload-line"></div>
+          <div class="cssload-line"></div>
+          <div class="cssload-subline"></div>
+          <div class="cssload-subline"></div>
+          <div class="cssload-subline"></div>
+          <div class="cssload-subline"></div>
+          <div class="cssload-subline"></div>
+          <div class="cssload-loader-circle-1"><div class="cssload-loader-circle-2"></div></div>
+          <div class="cssload-needle"></div>
+          <div class="cssload-loading">loading</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="fb-root"></div>
+    <script>
+        (function(d, s, id) {
+              var js, fjs = d.getElementsByTagName(s)[0];
+              if (d.getElementById(id)) return;
+              js = d.createElement(s); js.id = id;
+              js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.2&appId=271857736865248&autoLogAppEvents=1';
+              fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+    </script>
+
+
+    <div class="container-fluid">
+        <!-- Slider -->
+        <div class="tp-banner-container">
+            <div class="tp-banner" >
+                <ul>    
+                    <!-- SLIDE  -->
+                    <li data-transition="fade" data-slotamount="5" data-masterspeed="500" >
+                        <!-- MAIN IMAGE -->
+                        <img src="{% static 'images/slide.jpg' %}"  alt="slidebg1"  data-bgfit="cover" data-bgposition="left top" data-bgrepeat="no-repeat">
+                        <div class="carousel-caption">
+                            <img src="{% static 'images/logo2.png' %}" alt="">
+                            <h1>Learn, Share, Build</h1>
+                            <p><b>Welcome to BENZNZNA's blog, learn, share your knowledge, and build your careers.</b></p>
+                        </div>
+                        <!-- LAYERS -->
+                    </li>
+                    <li data-transition="fade" data-slotamount="5" data-masterspeed="500" >
+                        <!-- MAIN IMAGE -->
+                        <img src="{% static 'images/slide2.jpg' %}"  alt="slidebg2"  data-bgfit="cover" data-bgposition="left top" data-bgrepeat="no-repeat">
+                        <div class="carousel-caption">
+                            <img src="{% static 'images/logo2.png' %}" alt="">
+                            <h1>Learn, Share, Build</h1>
+                            <p><b>Welcome to BENZNZNA's blog, learn, share your knowledge, and build your careers.</b></p>
+                        </div>
+                        <!-- LAYERS -->
+                    </li>
+                    <li data-transition="fade" data-slotamount="5" data-masterspeed="500" >
+                        <!-- MAIN IMAGE -->
+                        <img src="{% static 'images/slide3.jpg' %}"  alt="slidebg3"  data-bgfit="cover" data-bgposition="left top" data-bgrepeat="no-repeat">
+                        <div class="carousel-caption">
+                            <img src="{% static 'images/logo2.png' %}" alt="">
+                            <h1>Learn, Share, Build</h1>
+                            <p><b>Welcome to BENZNZNA's blog, learn, share your knowledge, and build your careers.</b></p>
+                        </div>
+                        <!-- LAYERS -->
+                    </li>
+                    <li data-transition="fade" data-slotamount="5" data-masterspeed="500" >
+                        <!-- MAIN IMAGE -->
+                        <img src="{% static 'images/slide4.jpg' %}"  alt="slidebg4"  data-bgfit="cover" data-bgposition="left top" data-bgrepeat="no-repeat">
+                        <div class="carousel-caption">
+                            <img src="{% static 'images/logo2.png' %}" alt="">
+                            <h1>Learn, Share, Build</h1>
+                            <p><b>Welcome to BENZNZNA's blog, learn, share your knowledge, and build your careers.</b></p>
+                        </div>
+                        <!-- LAYERS -->
+                    </li>
+                    <li data-transition="fade" data-slotamount="5" data-masterspeed="500" >
+                        <!-- MAIN IMAGE -->
+                        <img src="{% static 'images/slide5.jpeg' %}"  alt="slidebg5"  data-bgfit="cover" data-bgposition="left top" data-bgrepeat="no-repeat">
+                        <div class="carousel-caption">
+                            <img src="{% static 'images/logo2.png' %}" alt="">
+                            <h1>Learn, Share, Build</h1>
+                            <p><b>Welcome to BENZNZNA's blog, learn, share your knowledge, and build your careers.</b></p>
+                        </div>
+                        <!-- LAYERS -->
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- //Slider -->
+
+        <div class="headernav">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-1 col-xs-3 col-sm-2 col-md-2 logo "><a href="{% url 'posts:list' %}"><img src="{% static 'images/logo2.jpg' %}" alt=""  /></a></div>
+                    <div class="col-lg-3 col-xs-9 col-sm-5 col-md-3 selecttopic">
+                        <div class="dropdown">
+                            <a data-toggle="dropdown" href="#" >Menu</a> <b class="caret"></b>
+                            <ul class="dropdown-menu" role="menu">
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="{% url 'posts:list' %}">Home</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-2" href="{% url 'posts:about' %}">About</a></li>
+
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 search hidden-xs hidden-sm col-md-3">
+                        <div class="wrap">
+                            <form method='GET' action='{% url "posts:list" %}' class='form'>
+                                <div class="pull-left txt"><input type="text" name='q' class="form-control" placeholder="Search Topics" value='{{ request.GET.q }}'></div>
+                                <div class="pull-right"><button class="btn btn-default" type='submit'><i class="fa fa-search"></i></button></div>
+                                <div class="clearfix"></div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-xs-12 col-sm-5 col-md-4 avt">
+                        {% if not request.user.is_authenticated %}
+                            <div class="stnt pull-right">
+                                <a class="btn btn-primary" href='{% url "register" %}'><i class="fa fa-user" aria-hidden="true"></i>&nbsp;Register</a>
+                                <a class="btn btn-primary" href='{% url "login" %}'><i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp;Login</a>
+                            </div>
+                        {% else %}
+                            <div class="stnt pull-left">
+                                <a class="btn btn-primary" href='{% url "posts:create" %}'><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Start New Topic</a>
+                            </div>
+                        {% endif %}  
+                        
+                        {% if request.user.is_authenticated %}
+                            <div class="env pull-left"><span>Hi,</span><h4>{{ request.user|capfirst }}</h4></div>
+                            <div class="avatar pull-left dropdown">
+                                <a data-toggle="dropdown" href="#"><img src="{{ user.profile.image.url }}" alt="" /></a> <b class="caret"></b>
+                                <div class="status green">&nbsp;</div>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li role="presentation"><a role="menuitem" tabindex="-1" href="{% url 'profile' %}"><i class="fa fa-user" aria-hidden="true"></i>&nbsp;My Profile</a></li>
+                                    <li role="presentation"><a role="menuitem" tabindex="-2" href="{% url 'posts:post_favourite_list' %}"><i class="fa fa-heart" aria-hidden="true"></i>&nbsp;Favourite Post</a></li>
+                                    <li role="presentation"><a role="menuitem" tabindex="-3" href="{% url 'change-password' %}"><i class="fa fa-key" aria-hidden="true"></i>&nbsp;Change Password</a></li>
+                                    <li role="presentation"><hr style="margin: 8px;"></li>
+                                    <li role="presentation"><a role="menuitem" tabindex="-4" href="{% url 'logout' %}"><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;Log Out</a></li>
+                                </ul>
+                            </div>
+                        {% endif %}
+                        
+                        <div class="clearfix"></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <section class="content">
+            <div class="container">
+                {% if request.user.is_authenticated %}
+                    {% if not user.profile %}
+                        <div class="alert alert-info alert-normal-info" style="text-align: center;font-size: 15px;font-family: cursive;">
+                            Welcome here with us, It's look like you don't have a valid profile, Please confirm it to have a simple access. <a href="{% url 'create_profile' %}">Confirm now</a>
+                        </div>
+                    {% endif %}
+                {% endif %}
+            </div>
+
+            {% include "messages_display.html" %}
+            
+            {% block content %}{% endblock content %}
+        </section>
+
+
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-1 col-xs-3 col-sm-2 logo "><a href="{% url 'posts:list' %}"><img src="{% static 'images/logo2.jpg' %}" alt=""  /></a></div>
+                    <div class="col-lg-8 col-xs-9 col-sm-5 ">Copyrights 2018, BENZNANA's Advancing the blog, MASTER ISI FSSM</div>
+                    <div class="col-lg-3 col-xs-12 col-sm-5 sociconcent">
+                        <ul class="socialicons">
+                            <li><a href="{% url 'newsletters:newsletter_signup' %}"><i class="fa fa-newspaper-o" aria-hidden="true"></i>&nbsp;Newsletter</a></li>
+                            <li><a href="{% url 'archive-feed' %}" target="_blank"><i class="fa fa-rss" aria-hidden="true"></i>&nbsp;RSS</a></li>
+                            <!--<li><a href="#"><i class="fa fa-facebook-square"></i></a></li>
+                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                            <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                            <li><a href="#"><i class="fa fa-cloud"></i></a></li>
+                            <li><a href="#"><i class="fa fa-rss"></i></a></li>-->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+
+    <div id="google_translate_element"></div>
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+          new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, multilanguagePage: true}, 'google_translate_element');
+        }
+    </script>
+
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+
+
+
+
+    <!-- get jQuery from the google apis -->
+    <script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
+
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+    <script src="{% static 'js/moment.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap-datetimepicker.min.js' %}"></script>
+
+    <script>
+        $(function () {
+            $('.date-input').datetimepicker({
+                format:'YYYY-MM-DD',
+                allowInputToggle: true,
+            });
+        });
+    </script>
+
+    <script src="{% static 'js/jquery.prettyPhoto.js' %}" type="text/javascript" charset="utf-8"></script>
+
+    <!-- SLIDER REVOLUTION 4.x SCRIPTS  -->
+    <script type="text/javascript" src="{% static 'rs-plugin/js/jquery.themepunch.plugins.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'rs-plugin/js/jquery.themepunch.revolution.min.js' %}"></script> 
+
+    <script src="{% static 'js/marked.min.js' %}"></script>
+    
+    <script src="{% static 'js/jconfirmaction.jquery.js' %}" type="text/javascript"></script>
+
+    <script src="{% static 'js/scripts.js' %}"></script>
+        <!--
+        <script type="application/javascript" src="{% static 'rss/app.js' %}"></script>
+        <script type="application/javascript">
+            window.addEventListener("load", function() {
+                    rssApp.setup();
+            });
+        </script>-->
+    <script>
+        //LOADER
+        $(document).ready(function(){
+          {% block jquery %}{% endblock %}
+        })
+    </script>
+
+</body>
+</html>
